@@ -1,11 +1,13 @@
+import Search from '../Search';
 import { StyledNavigation } from './styles';
 
-export default function Navigation() {
+export default function Navigation({ searchValue, setSearchValue }) {
     return (
         <StyledNavigation>
             <div>
                 <Logo />
             </div>
+            <Search searchValue={searchValue} setSearchValue={setSearchValue} />
         </StyledNavigation>
     );
 }

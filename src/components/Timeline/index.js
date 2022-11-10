@@ -1,7 +1,7 @@
 import config from '../../../config.json';
 import { StyledTimeline } from './styles';
 
-export default function Timeline() {
+export default function Timeline({ searchValue }) {
     const playlistNames = Object.keys(config.playlists);
 
     return (
@@ -10,20 +10,28 @@ export default function Timeline() {
                 const playlistVideos = config.playlists[playlistName];
 
                 return (
-                    <section>
+                    <section key={playlistName}>
                         <h3>{playlistName}</h3>
                         <div>
-                            {playlistVideos.map(playlistVideo => {
-                                return (
-                                    <a href={playlistVideo.url}>
-                                        <img
-                                            src={playlistVideo.thumb}
-                                            alt={`${playlistVideo.title} Thumb`}
-                                        />
-                                        <h4>{playlistVideo.title}</h4>
-                                    </a>
-                                );
-                            })}
+                            {playlistVideos
+                                .filter(playlistVideo => {
+                                    const videoTitleNormalized = playlistVideo.title.toLowerCase();
+                                    const SearchValueNormalized = searchValue
+                                        ? searchValue.toLowerCase()
+                                        : '';
+                                    return videoTitleNormalized.includes(SearchValueNormalized);
+                                })
+                                .map(filteredVideos => {
+                                    return (
+                                        <a key={filteredVideos.url} href={filteredVideos.url}>
+                                            <img
+                                                src={filteredVideos.thumb}
+                                                alt={`${filteredVideos.title} Thumb`}
+                                            />
+                                            <h4>{filteredVideos.title}</h4>
+                                        </a>
+                                    );
+                                })}
                         </div>
                     </section>
                 );
