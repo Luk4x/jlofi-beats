@@ -1,4 +1,5 @@
 import Search from '../Search';
+import ThemeSwitch from '../ThemeSwitch';
 import { StyledNavigation } from './styles';
 
 export default function Navigation({ searchValue, setSearchValue }) {
@@ -8,6 +9,7 @@ export default function Navigation({ searchValue, setSearchValue }) {
                 <Logo />
             </div>
             <Search searchValue={searchValue} setSearchValue={setSearchValue} />
+            <ThemeSwitch />
         </StyledNavigation>
     );
 }
