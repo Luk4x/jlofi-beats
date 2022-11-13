@@ -1,37 +1,22 @@
 import { useState } from 'react';
 import { StyledRegisterVideo } from './styles';
-
-function useForm() {
-    const [formValues, setFormValues] = useState({ title: '', url: '' });
-
-    const handleChange = e => {
-        const eName = e.target.name;
-        const eValue = e.target.value;
-        setFormValues({ ...formValues, [eName]: eValue });
-    };
-
-    const clearForm = () => {
-        setFormValues({});
-    };
-
-    return {
-        formValues,
-        handleChange,
-        clearForm
-    };
-}
+import { customPlaylist } from '../../lib/customPlaylist';
 
 export default function RegisterVideo() {
     const [formVisibility, setFormVisibility] = useState(false);
-    const formRegister = useForm();
+    const supabaseCustomPlaylist = customPlaylist();
+    const [videoId, setVideoId] = useState('');
 
     function formSubmission(e) {
         e.preventDefault();
 
-        console.log(formRegister.formValues);
+        supabaseCustomPlaylist
+            .insert({ videoId })
+            .then(data => console.log(data))
+            .catch(err => console.error(err));
 
         setFormVisibility(false);
-        formRegister.clearForm();
+        setVideoId('');
     }
 
     return (
@@ -50,19 +35,11 @@ export default function RegisterVideo() {
                             X
                         </button>
                         <input
-                            placeholder="Título do Vídeo"
+                            placeholder="URL ou ID do Vídeo"
                             type="text"
-                            name="title"
-                            value={formRegister.formValues.title}
-                            onChange={formRegister.handleChange}
-                            required
-                        />
-                        <input
-                            placeholder="URL do Vídeo"
-                            type="text"
-                            name="url"
-                            value={formRegister.formValues.url}
-                            onChange={formRegister.handleChange}
+                            name="id"
+                            value={videoId}
+                            onChange={e => setVideoId(e.target.value)}
                             required
                         />
                         <button type="submit">Cadastrar</button>
