@@ -23,7 +23,19 @@ export const StyledTimeline = styled.div`
         padding: 0;
         overflow: hidden;
         padding: 16px;
-        div {
+
+        .profile {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+
+            img {
+                border-radius: 50%;
+                padding: 0 45px;
+            }
+        }
+
+        .carrousel {
             width: calc(100vw - 16px * 4);
             display: grid;
             grid-gap: 16px;
